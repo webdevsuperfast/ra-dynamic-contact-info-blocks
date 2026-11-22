@@ -5,7 +5,7 @@ const builds = [
   {
     entryPoints: ["node_modules/libphonenumber-js/bundle/libphonenumber-js.min.js"],
     outfile: "admin/js/libphonenumber-js.min.js",
-    minify: false
+    minify: true
   }
 ];
 
