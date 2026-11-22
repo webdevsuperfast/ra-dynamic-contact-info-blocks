@@ -95,11 +95,6 @@ These tags will be replaced with the current DCIB field values when the email is
 ### 1.0
 
 - Initial release
-- Implemented contact information management system
-- Added support for basic fields (phone, email, address)
-- Added custom fields functionality
-- Responsive admin interface
-- WordPress Plugin Boilerplate architecture
 
 ## License
 

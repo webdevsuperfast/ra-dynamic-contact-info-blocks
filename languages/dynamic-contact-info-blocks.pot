@@ -1,4 +1,4 @@
-# Copyright (C) 2026 Currier Marketing
+# Copyright (C) 2026 Rotsen Mark Acob
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
@@ -22,7 +22,7 @@ msgstr ""
 
 #. Plugin URI of the plugin
 #: dynamic-contact-info-blocks.php
-msgid "https://github.com/currier-marketing/dynamic-contact-info-blocks"
+msgid "https://github.com/webdevsuperfast/dynamic-contact-info-blocks"
 msgstr ""
 
 #. Description of the plugin
@@ -32,12 +32,12 @@ msgstr ""
 
 #. Author of the plugin
 #: dynamic-contact-info-blocks.php
-msgid "Currier Marketing"
+msgid "Rotsen Mark Acob"
 msgstr ""
 
 #. Author URI of the plugin
 #: dynamic-contact-info-blocks.php
-msgid "https://curriermarketing.com"
+msgid "https://www.rotsenacob.com"
 msgstr ""
 
 #: admin/class-dcib-admin.php:102

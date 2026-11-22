@@ -108,11 +108,6 @@ You can also output any field via the shortcode:
 = 1.0 =
 
 * Initial release
-* Implemented contact information management system
-* Added support for basic fields (phone, email, address)
-* Added custom fields functionality
-* Responsive admin interface
-* WordPress Plugin Boilerplate architecture
 
 == License ==
 
@@ -120,4 +115,4 @@ This plugin is licensed under the GPL v2 or later.
 
 == Credits ==
 
-Developed by Currier Marketing
+Developed by Rotsen Mark Acob
