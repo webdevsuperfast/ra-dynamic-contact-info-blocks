@@ -12,6 +12,7 @@
     <rule ref="WordPress-Core"/>
     <rule ref="WordPress-Docs"/>
     <rule ref="WordPress-Extra"/>
+    <config name="prefixes" value="dcib"/>
 
     <!-- Disable filename and file header sniffs that conflict with WordPress plugin main file and project layout -->
     <rule ref="WordPress.Files.FileName">
