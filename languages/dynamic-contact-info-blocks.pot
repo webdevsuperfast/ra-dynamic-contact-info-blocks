@@ -2,21 +2,21 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Dynamic Contact Info Blocks 1.2.1\n"
+"Project-Id-Version: Dynamic Contact Info Blocks 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dynamic-contact-info-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-08T06:35:51+08:00\n"
+"POT-Creation-Date: 2026-11-23T06:23:06+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: dynamic-contact-info-blocks\n"
 
 #. Plugin Name of the plugin
 #: dynamic-contact-info-blocks.php
-#: admin/class-dcib-admin.php:125
+#: admin/class-dcib-admin.php:137
 msgid "Dynamic Contact Info Blocks"
 msgstr ""
 
@@ -40,139 +40,155 @@ msgstr ""
 msgid "https://www.rotsenacob.com"
 msgstr ""
 
-#: admin/class-dcib-admin.php:102
+#: admin/class-dcib-admin.php:111
 msgid "Copied to clipboard"
 msgstr ""
 
-#: admin/class-dcib-admin.php:103
+#: admin/class-dcib-admin.php:112
 msgid "Are you sure you want to remove this field?"
 msgstr ""
 
-#: admin/class-dcib-admin.php:104
+#: admin/class-dcib-admin.php:113
 msgid "Copy Key"
 msgstr ""
 
-#: admin/class-dcib-admin.php:105
-#: admin/partials/dcib-admin-display.php:67
+#: admin/class-dcib-admin.php:114
+#: admin/partials/dcib-admin-display.php:74
 msgid "Actions ▾"
 msgstr ""
 
-#: admin/class-dcib-admin.php:106
-#: admin/partials/dcib-admin-display.php:72
+#: admin/class-dcib-admin.php:115
+#: admin/partials/dcib-admin-display.php:79
 msgid "Remove"
 msgstr ""
 
-#: admin/class-dcib-admin.php:107
-#: admin/class-dcib-admin.php:262
-#: admin/partials/dcib-admin-display.php:52
+#: admin/class-dcib-admin.php:116
+#: admin/class-dcib-admin.php:274
+#: admin/partials/dcib-admin-display.php:59
 #: includes/class-dcib-elementor-dynamic-tag.php:112
 msgid "Phone"
 msgstr ""
 
-#: admin/class-dcib-admin.php:108
-#: admin/class-dcib-admin.php:270
-#: admin/partials/dcib-admin-display.php:53
+#: admin/class-dcib-admin.php:117
+#: admin/class-dcib-admin.php:282
+#: admin/partials/dcib-admin-display.php:60
 #: includes/class-dcib-elementor-dynamic-tag.php:113
 msgid "Email"
 msgstr ""
 
-#: admin/class-dcib-admin.php:109
-#: admin/class-dcib-admin.php:278
-#: admin/partials/dcib-admin-display.php:54
+#: admin/class-dcib-admin.php:118
+#: admin/class-dcib-admin.php:290
+#: admin/partials/dcib-admin-display.php:61
 #: includes/class-dcib-elementor-dynamic-tag.php:114
 msgid "Address"
 msgstr ""
 
-#: admin/class-dcib-admin.php:110
-#: admin/partials/dcib-admin-display.php:55
+#: admin/class-dcib-admin.php:119
+#: admin/partials/dcib-admin-display.php:62
 msgid "Custom"
 msgstr ""
 
-#: admin/class-dcib-admin.php:112
+#: admin/class-dcib-admin.php:120
+#: admin/partials/dcib-admin-display.php:56
+msgid "Field key, e.g. (STORE_HOURS)"
+msgstr ""
+
+#: admin/class-dcib-admin.php:121
+#: admin/partials/dcib-admin-display.php:58
+msgid "Field type"
+msgstr ""
+
+#: admin/class-dcib-admin.php:122
+#: admin/partials/dcib-admin-display.php:65
+#: admin/partials/dcib-admin-display.php:71
+msgid "Field value"
+msgstr ""
+
+#: admin/class-dcib-admin.php:124
 msgid "Invalid phone number for selected country."
 msgstr ""
 
-#: admin/class-dcib-admin.php:113
+#: admin/class-dcib-admin.php:125
 msgid "Valid number"
 msgstr ""
 
-#: admin/class-dcib-admin.php:126
+#: admin/class-dcib-admin.php:138
 msgid "Contact Info"
 msgstr ""
 
-#: admin/class-dcib-admin.php:136
-#: admin/class-dcib-admin.php:137
-#: includes/class-dcib-import-export.php:194
+#: admin/class-dcib-admin.php:148
+#: admin/class-dcib-admin.php:149
+#: includes/class-dcib-import-export.php:315
 msgid "Import/Export"
 msgstr ""
 
-#: admin/class-dcib-admin.php:153
+#: admin/class-dcib-admin.php:165
 msgid "Settings"
 msgstr ""
 
-#: admin/class-dcib-admin.php:247
+#: admin/class-dcib-admin.php:259
 msgid "Contact Information"
 msgstr ""
 
-#: admin/class-dcib-admin.php:254
+#: admin/class-dcib-admin.php:266
 msgid "Default Country"
 msgstr ""
 
-#: admin/class-dcib-admin.php:286
+#: admin/class-dcib-admin.php:298
 msgid "Maps URL (optional)"
 msgstr ""
 
-#: admin/class-dcib-admin.php:307
+#: admin/class-dcib-admin.php:319
 msgid "Used to format phone numbers for this site."
 msgstr ""
 
-#: admin/class-dcib-admin.php:330
+#: admin/class-dcib-admin.php:342
 msgid "Invalid country selected."
 msgstr ""
 
-#: admin/class-dcib-admin.php:362
-#: admin/class-dcib-admin.php:386
-#: admin/class-dcib-admin.php:408
+#: admin/class-dcib-admin.php:374
+#: admin/class-dcib-admin.php:398
+#: admin/class-dcib-admin.php:420
 msgid "Placeholders ▾"
 msgstr ""
 
-#: admin/class-dcib-admin.php:370
+#: admin/class-dcib-admin.php:382
 msgid "Use (PHONE) for display, (PHONE_LINK) for a tel: link."
 msgstr ""
 
-#: admin/class-dcib-admin.php:393
+#: admin/class-dcib-admin.php:405
 msgid "Use (EMAIL) anywhere to output this value."
 msgstr ""
 
-#: admin/class-dcib-admin.php:415
+#: admin/class-dcib-admin.php:427
 msgid "Use (ADDRESS) for text, (ADDRESS_LINK) for a map URL."
 msgstr ""
 
-#: admin/class-dcib-admin.php:428
+#: admin/class-dcib-admin.php:440
 msgid "Leave empty to auto-generate a Google Maps link from the address above, or paste a custom URL (Google Business Profile, Apple Maps, etc.)."
 msgstr ""
 
 #. translators: %s: country name
-#: admin/class-dcib-admin.php:453
+#: admin/class-dcib-admin.php:493
 #, php-format
 msgid "Phone number does not appear to be valid for %s."
 msgstr ""
 
 #. translators: %s: country name
-#: admin/class-dcib-admin.php:612
+#: admin/class-dcib-admin.php:712
 #, php-format
 msgid "One or more phone numbers are not valid for %s and were not saved."
 msgstr ""
 
-#: admin/partials/dcib-admin-display.php:31
+#: admin/partials/dcib-admin-display.php:37
 msgid "Dynamic Contact Info Blocks Settings"
 msgstr ""
 
-#: admin/partials/dcib-admin-display.php:39
+#: admin/partials/dcib-admin-display.php:45
 msgid "Custom Fields"
 msgstr ""
 
-#: admin/partials/dcib-admin-display.php:80
+#: admin/partials/dcib-admin-display.php:87
 msgid "Add Custom Field"
 msgstr ""
 
@@ -197,64 +213,70 @@ msgid "Address (map link)"
 msgstr ""
 
 #: includes/class-dcib-import-export.php:49
-#: includes/class-dcib-import-export.php:80
-#: includes/class-dcib-import-export.php:189
+#: includes/class-dcib-import-export.php:85
+#: includes/class-dcib-import-export.php:310
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:84
+#: includes/class-dcib-import-export.php:53
+#: includes/class-dcib-import-export.php:89
 msgid "Security check failed."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:93
+#: includes/class-dcib-import-export.php:98
+#: includes/class-dcib-import-export.php:120
 msgid "Please select a valid backup file."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:105
+#: includes/class-dcib-import-export.php:110
 msgid "Invalid file type. Please upload a JSON file."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:113
+#: includes/class-dcib-import-export.php:115
+msgid "Backup file is too large. Maximum size is 2 MB."
+msgstr ""
+
+#: includes/class-dcib-import-export.php:128
 msgid "Invalid JSON file."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:119
+#: includes/class-dcib-import-export.php:150
 msgid "Invalid backup file structure."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:179
+#: includes/class-dcib-import-export.php:243
 msgid "Settings imported successfully."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:198
+#: includes/class-dcib-import-export.php:319
 msgid "Export Settings"
 msgstr ""
 
-#: includes/class-dcib-import-export.php:199
+#: includes/class-dcib-import-export.php:320
 msgid "Download a backup of your contact information settings."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:204
+#: includes/class-dcib-import-export.php:325
 msgid "Download Backup"
 msgstr ""
 
-#: includes/class-dcib-import-export.php:210
-#: includes/class-dcib-import-export.php:224
+#: includes/class-dcib-import-export.php:331
+#: includes/class-dcib-import-export.php:345
 msgid "Import Settings"
 msgstr ""
 
-#: includes/class-dcib-import-export.php:211
+#: includes/class-dcib-import-export.php:332
 msgid "Upload a backup file to restore your contact information settings."
 msgstr ""
 
-#: includes/class-dcib-import-export.php:216
+#: includes/class-dcib-import-export.php:337
 msgid "Backup File"
 msgstr ""
 
-#: includes/class-dcib-import-export.php:219
+#: includes/class-dcib-import-export.php:340
 msgid "Select the JSON backup file to import."
 msgstr ""
 
-#: includes/class-dcib.php:207
+#: includes/class-dcib.php:205
 msgid "Dynamic Contact Info"
 msgstr ""
