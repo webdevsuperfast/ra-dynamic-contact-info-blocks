@@ -67,7 +67,6 @@ class DCIB {
 		require_once plugin_dir_path( __DIR__ ) . 'admin/class-dcib-admin.php';
 		require_once plugin_dir_path( __DIR__ ) . 'public/class-dcib-public.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-dcib-wpforms.php';
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-dcib-updater.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-dcib-import-export.php';
 		require_once plugin_dir_path( __DIR__ ) . 'includes/class-dcib-phone-utils.php';
 	}
