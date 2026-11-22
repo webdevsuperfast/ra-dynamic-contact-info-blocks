@@ -54,8 +54,8 @@ jobs:
 
       - name: Verify version consistency
         run: |
-          PLUGIN_VERSION=$(grep -oP "define\(\s*['\"]DCIB_VERSION['\"]\s*,\s*['\"]\K[0-9]+\.[0-9]+\.[0-9]+" dynamic-contact-info-blocks.php || true)
-          HEADER_VERSION=$(grep -oP "^\s*\*\s*Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" dynamic-contact-info-blocks.php || true)
+          PLUGIN_VERSION=$(grep -oP "define\(\s*['\"]DCIB_VERSION['\"]\s*,\s*['\"]\K[0-9]+\.[0-9]+(\.[0-9]+)?" dynamic-contact-info-blocks.php || true)
+          HEADER_VERSION=$(grep -oP "^\s*\*\s*Version:\s*\K[0-9]+\.[0-9]+(\.[0-9]+)?" dynamic-contact-info-blocks.php || true)
           TAG_VERSION="${GITHUB_REF#refs/tags/}"
           TAG_VERSION="${TAG_VERSION#v}"
 
