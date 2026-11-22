@@ -80,3 +80,15 @@ QA is lint + security scans only:
 - `vendor/bin/phpcs` (WPCS ruleset) — the failing gate.
 - `security.yml` (PR/push/tags + weekly Mon 05:00 UTC + dispatch): `dependency-review-action` (PR-only, fail on `high`), `osv-scanner` on `composer.lock`, Semgrep `p/php + p/security-audit` (excludes `admin/js/lib`, `vendor`; uploads `semgrep.sarif`), TruffleHog `--only-verified` full history.
 - Manual verification for behavior changes: set values on the settings page, then check a page containing `(PHONE)/(EMAIL)/(ADDRESS)`, a `_LINK` variant, one custom `(KEY)`, and `[dcib key="…"]` — plus Elementor render and WPForms `{dcib_*}` tag if touched.
+
+## CI
+
+Install the local-ci skill (one-time setup):
+
+```bash
+npx skills add redwoodjs/local-ci --skill local-ci
+```
+
+Before completing any work, run the `local-ci` skill to validate
+your changes locally. If it fails, fix the issue and re-run.
+Do not report work as done until it passes.
