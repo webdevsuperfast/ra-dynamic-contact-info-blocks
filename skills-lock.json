@@ -67,6 +67,13 @@
       "skillPath": "skills/git-workflow/SKILL.md",
       "computedHash": "f57ee27164226c7ea237b1dc294db4871bc95ee59ca3c4844424fe525b98590b"
     },
+    "local-ci": {
+      "source": "redwoodjs/local-ci",
+      "commit": "c8597bb695a4cab84002f5977dd22ec56156cbab",
+      "sourceType": "github",
+      "skillPath": "skills/local-ci/SKILL.md",
+      "computedHash": "5bde9cd604db9bff3eaa69b86a4edd18af23214f5ef153db40c1c91de71997d1"
+    },
     "security-testing": {
       "source": "petrkindlmann/qa-skills",
       "sourceType": "github",
