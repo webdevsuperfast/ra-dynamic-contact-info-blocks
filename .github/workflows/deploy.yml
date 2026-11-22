@@ -1,0 +1,104 @@
+name: Deploy
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
+    tags:
+      - "*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: PHPCS Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, openssl, json, dom, curl
+          tools: composer
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Run PHPCBF (auto-fix)
+        run: vendor/bin/phpcbf || true
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs
+
+  build:
+    name: Build
+    needs: lint
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, openssl, json, dom, curl
+          tools: composer
+
+      - name: Verify version consistency
+        run: |
+          PLUGIN_VERSION=$(grep -oP "define\(\s*['\"]DCIB_VERSION['\"]\s*,\s*['\"]\K[0-9]+\.[0-9]+\.[0-9]+" dynamic-contact-info-blocks.php || true)
+          HEADER_VERSION=$(grep -oP "^\s*\*\s*Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+" dynamic-contact-info-blocks.php || true)
+          TAG_VERSION="${GITHUB_REF#refs/tags/}"
+          TAG_VERSION="${TAG_VERSION#v}"
+
+          if [ -z "${PLUGIN_VERSION}" ]; then
+            echo "::error::Could not read DCIB_VERSION from dynamic-contact-info-blocks.php"
+            exit 1
+          fi
+
+          if [ "${TAG_VERSION}" != "${PLUGIN_VERSION}" ]; then
+            echo "::error::Version mismatch! Tag: ${TAG_VERSION}, Plugin: ${PLUGIN_VERSION}"
+            exit 1
+          fi
+
+          if [ -n "${HEADER_VERSION}" ] && [ "${HEADER_VERSION}" != "${PLUGIN_VERSION}" ]; then
+            echo "::error::Version mismatch! Plugin header: ${HEADER_VERSION}, DCIB_VERSION: ${PLUGIN_VERSION}"
+            exit 1
+          fi
+
+          echo "Version check passed: ${PLUGIN_VERSION}"
+
+      - name: Create Archive
+        run: zip -r dynamic-contact-info-blocks.zip . --exclude=.git/* --exclude=.github/* --exclude=.gitignore --exclude=.editorconfig --exclude=phpcs.xml --exclude=composer.lock --exclude=composer.json --exclude=composer.phar --exclude=*.md --exclude=*.json --exclude=.agents/* --exclude=vendor/* --exclude=build.js
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamic-contact-info-blocks-zip
+          path: dynamic-contact-info-blocks.zip
+
+  release:
+    name: Create Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dynamic-contact-info-blocks-zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dynamic-contact-info-blocks.zip

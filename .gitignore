@@ -1,0 +1,9 @@
+.vscode
+.DS_Store
+vendor/
+.github/skills/
+.agents
+.phpactor.json
+.claude/
+agent/
+node_modules/

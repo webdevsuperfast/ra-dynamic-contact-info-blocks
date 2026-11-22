@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="DCIB WordPress Coding Standards">
+    <description>Apply WordPress Coding Standards to the plugin.</description>
+
+    <file>./</file>
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+
+    <arg name="extensions" value="php"/>
+    <arg name="basepath" value="."/>
+
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Docs"/>
+    <rule ref="WordPress-Extra"/>
+
+    <!-- Disable filename and file header sniffs that conflict with WordPress plugin main file and project layout -->
+    <rule ref="WordPress.Files.FileName">
+        <severity>0</severity>
+    </rule>
+
+    <config name="testVersion" value="8.1-"/>
+</ruleset>

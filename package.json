@@ -1,0 +1,32 @@
+{
+  "name": "dynamic-contact-info-blocks",
+  "version": "1.0.0",
+  "description": "Effortlessly manage your business details! Update phone numbers, emails, and addresses in a snap with dynamic fields.",
+  "keywords": [
+    "contact",
+    "shortcode",
+    "phone",
+    "email",
+    "address"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdevsuperfast/dynamic-contact-info-blocks.git"
+  },
+  "license": "GPL-2.0-or-later",
+  "author": "Rotsen Mark Acob",
+  "type": "commonjs",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "node build.js --watch",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "libphonenumber-js": "^1.13.17"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "esbuild-plugin-copy": "^2.1.1"
+  }
+}

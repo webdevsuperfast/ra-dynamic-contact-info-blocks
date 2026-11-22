@@ -1,0 +1,113 @@
+{
+  "version": 2,
+  "skills": {
+    "caveman": {
+      "source": "JuliusBrussee/skills",
+      "sourceType": "github",
+      "skillPath": "skills/caveman/SKILL.md",
+      "computedHash": "aea403e6fac55a7404d337faa8e6b76188d67d1c078c651fd06590ddcfdcabef"
+    },
+    "code-review": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/code-review/SKILL.md",
+      "computedHash": "ce86b40a3d1648a0018b712f0c70704e6c2316b2a9b9e915ab116916a31273dc"
+    },
+    "diagnosing-bugs": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/diagnosing-bugs/SKILL.md",
+      "computedHash": "87c78ae966e591f9ceb177789cc5cc9de69277cd26679ffd36ca5300f430d513"
+    },
+    "elementor-addon": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-addon/SKILL.md",
+      "computedHash": "f84139bf59b0117be8a6e1ad4cd672f92b8ba6e07da9e39d32e302dcad2f0048"
+    },
+    "elementor-context-menu": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-context-menu/SKILL.md",
+      "computedHash": "d402f17a296f79ba72bbcba43f8473bce7f1f4e3fcd4f9e49d7a25655b9ae7a5"
+    },
+    "elementor-controls": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-controls/SKILL.md",
+      "computedHash": "1cd0608714747da91342beefa64326b7c3ddabfbd8b1e1e000e9552e4c790675"
+    },
+    "elementor-finder": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-finder/SKILL.md",
+      "computedHash": "53ebc853a34312dad5be6a9b13fe7529a7139542efc2f4c5d0cd8c11e8624195"
+    },
+    "elementor-forms": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-forms/SKILL.md",
+      "computedHash": "936b04ea1f28343821099366080b71f219297018041950601e39143e8e865961"
+    },
+    "elementor-hooks": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-hooks/SKILL.md",
+      "computedHash": "35b208c45bb63e4d2ee8ac9edc5abac9212929eb933368dfe2259507e81f6e38"
+    },
+    "elementor-themes": {
+      "source": "thatintrovertdeveloper/elementor-skills",
+      "sourceType": "github",
+      "skillPath": "elementor-themes/SKILL.md",
+      "computedHash": "f1552f6f1c2ef7fca41d5a18301a253f6ea8fabf32663f7ac70fa1b8deac9dc9"
+    },
+    "git-workflow": {
+      "source": "netresearch/git-workflow-skill",
+      "sourceType": "github",
+      "skillPath": "skills/git-workflow/SKILL.md",
+      "computedHash": "f57ee27164226c7ea237b1dc294db4871bc95ee59ca3c4844424fe525b98590b"
+    },
+    "security-testing": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/security-testing/SKILL.md",
+      "computedHash": "c1eafc066006d7f122122b140bb020ccf2ab8d0f4af5ba7d331dbb388c38ad3e"
+    },
+    "synthetic-monitoring": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/synthetic-monitoring/SKILL.md",
+      "computedHash": "c91d873ba1bda62bb4c861185c30167eef14af307bc9eb6ca401092423be8d4e"
+    },
+    "test-strategy": {
+      "source": "petrkindlmann/qa-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-strategy/SKILL.md",
+      "computedHash": "02136ba73e4c2af061792a2e5a135711aede9be3a15f2b777049f6e6af8d51f3"
+    },
+    "wp-performance": {
+      "source": "WordPress/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wp-performance/SKILL.md",
+      "computedHash": "86a5cd8d634b60870eaacccf3cada1537caf00c3fa5ff015f06b47423baea755"
+    },
+    "wp-phpstan": {
+      "source": "WordPress/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wp-phpstan/SKILL.md",
+      "computedHash": "67cc775b1b54f0bd882443909810b59fbc51a44ab757acf3b143aed7b3ca43f1"
+    },
+    "wp-plugin-development": {
+      "source": "WordPress/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wp-plugin-development/SKILL.md",
+      "computedHash": "dbfe220976e2eec5dc90aef6163a873e2cea000bbe007de44d1f7949a4cf4ee6"
+    },
+    "wpds": {
+      "source": "WordPress/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wpds/SKILL.md",
+      "computedHash": "a05ae1d12d083ac3ed85ab50dfabdcab6d437cc87ecda2378bef6eb1aedb25db"
+    }
+  }
+}

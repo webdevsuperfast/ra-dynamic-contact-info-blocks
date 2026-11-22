@@ -1,0 +1,95 @@
+name: Security
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
+    tags:
+      - "*"
+  schedule:
+    # Weekly full rescan so a newly published advisory fails the build on its
+    # own rather than waiting for the next commit.
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@v4.9.0
+        with:
+          fail-on-severity: high
+
+  osv-scan:
+    name: OSV Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Exits non-zero when composer.lock resolves to a known advisory.
+      - name: Scan composer.lock against the OSV database
+        uses: google/osv-scanner-action/osv-scanner-action@v2.7.1
+        with:
+          scan-args: |-
+            --lockfile=composer.lock
+
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan PHP sources
+        run: |
+          docker run --rm \
+            -v "${GITHUB_WORKSPACE}:/src" \
+            -w /src \
+            semgrep/semgrep:1.185.0 \
+            semgrep scan \
+              --config=p/php \
+              --config=p/security-audit \
+              --exclude=admin/js/lib \
+              --exclude=vendor \
+              --metrics=off \
+              --error \
+              --sarif --output=/src/semgrep.sarif
+
+      - name: Upload SARIF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-sarif
+          path: semgrep.sarif
+          if-no-files-found: ignore
+
+  secret-scan:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # --only-verified keeps third-party false positives out of the gate: a
+      # finding here means the credential actually authenticated.
+      - name: TruffleHog
+        uses: trufflesecurity/trufflehog@v3.99.9
+        with:
+          path: ./
+          version: "3.99.9"
+          extra_args: --only-verified
