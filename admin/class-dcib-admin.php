@@ -467,6 +467,24 @@ class DCIB_Admin {
 	 * @return string Serialized array with 'value' and 'tel' keys.
 	 */
 	public function sanitize_phone_number( $value ) {
+		$stored = $this->parse_stored_phone( $value );
+
+		// update_option() sanitizes the value a second time through add_option()
+		// when the option does not exist yet, so the stored shape arrives here
+		// again. Return it as-is instead of rejecting a serialized string.
+		if ( null !== $stored ) {
+			if ( '' === $stored['value'] ) {
+				return '';
+			}
+
+			return maybe_serialize(
+				array(
+					'value' => DCIB_Phone_Utils::format( $stored['value'], DCIB_Phone_Utils::get_default_country() ),
+					'tel'   => $stored['tel'],
+				)
+			);
+		}
+
 		$value   = sanitize_text_field( $this->to_string( $value ) );
 		$country = DCIB_Phone_Utils::get_default_country();
 		$tel     = isset( $_POST['dcib_phone_number_tel'] ) && is_string( $_POST['dcib_phone_number_tel'] ) ? sanitize_text_field( wp_unslash( $_POST['dcib_phone_number_tel'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -476,15 +494,19 @@ class DCIB_Admin {
 		}
 
 		if ( ! DCIB_Phone_Utils::is_valid( $value, $country ) || ( $tel && ! DCIB_Phone_Utils::is_valid( $tel, $country ) ) ) {
-			add_settings_error(
-				'dcib_messages',
-				'dcib_phone_invalid',
-				sprintf(
-					/* translators: %s: country name */
-					__( 'Phone number does not appear to be valid for %s.', 'ra-dynamic-contact-info-blocks' ),
-					DCIB_Phone_Utils::get_countries()[ $country ]
-				)
-			);
+			// A first save re-validates the raw value through add_option(), so
+			// only report the failure once.
+			if ( ! $this->has_settings_error( 'dcib_phone_invalid' ) ) {
+				add_settings_error(
+					'dcib_messages',
+					'dcib_phone_invalid',
+					sprintf(
+						/* translators: %s: country name */
+						__( 'Phone number does not appear to be valid for %s.', 'ra-dynamic-contact-info-blocks' ),
+						DCIB_Phone_Utils::get_countries()[ $country ]
+					)
+				);
+			}
 			return $value;
 		}
 
@@ -494,6 +516,47 @@ class DCIB_Admin {
 				'tel'   => $tel ? DCIB_Phone_Utils::format_e164( $tel, $country ) : DCIB_Phone_Utils::format_e164( $value, $country ),
 			)
 		);
+	}
+
+	/**
+	 * Read a phone option value that is already in the stored serialized shape.
+	 *
+	 * @param mixed $value Raw option value.
+	 *
+	 * @return array{value: string, tel: string}|null
+	 */
+	private function parse_stored_phone( $value ) {
+		if ( ! is_string( $value ) || ! is_serialized( $value ) ) {
+			return null;
+		}
+
+		$parsed = maybe_unserialize( $value );
+
+		if ( ! is_array( $parsed ) || ! isset( $parsed['value'] ) ) {
+			return null;
+		}
+
+		return array(
+			'value' => $this->to_string( $parsed['value'] ),
+			'tel'   => isset( $parsed['tel'] ) ? $this->to_string( $parsed['tel'] ) : '',
+		);
+	}
+
+	/**
+	 * Whether the given settings error code was already reported this request.
+	 *
+	 * @param string $code Settings error code.
+	 *
+	 * @return bool
+	 */
+	private function has_settings_error( $code ) {
+		foreach ( get_settings_errors( 'dcib_messages' ) as $error ) {
+			if ( isset( $error['code'] ) && $code === $error['code'] ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -579,10 +642,10 @@ class DCIB_Admin {
 			);
 		}
 
-		if ( $has_invalid ) {
+		if ( $has_invalid && ! $this->has_settings_error( 'dcib_custom_phone_invalid' ) ) {
 			add_settings_error(
 				'dcib_messages',
-				'dcib_phone_invalid',
+				'dcib_custom_phone_invalid',
 				sprintf(
 				/* translators: %s: country name */
 					__( 'One or more phone numbers are not valid for %s and were not saved.', 'ra-dynamic-contact-info-blocks' ),

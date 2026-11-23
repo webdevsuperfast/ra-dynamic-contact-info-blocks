@@ -112,6 +112,7 @@ You can also output any field via the shortcode:
 * Registered a sanitize callback for the custom fields setting instead of a `pre_update_option` filter.
 * Removed the recurring version migration that could overwrite saved phone numbers and custom fields.
 * Custom field sanitizing now accepts the stored data format, so imports and programmatic updates no longer erase existing fields.
+* Fixed the false "Phone number does not appear to be valid" error on the first save, where the not-yet-stored option was sanitized twice.
 
 = 1.0 =
 
