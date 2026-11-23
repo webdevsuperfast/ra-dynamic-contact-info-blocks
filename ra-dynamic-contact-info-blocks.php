@@ -2,22 +2,22 @@
 /**
  * The plugin bootstrap file
  *
- * @link              https://github.com/webdevsuperfast/ra-dynamic-contact-info-blocks
+ * @link              https://www.rotsenacob.com/
  * @since             1.0
  * @package           DynamicContactInfoBlocks
  *
  * @wordpress-plugin
  * Plugin Name:       Dynamic Contact Info Blocks
- * Plugin URI:        https://github.com/webdevsuperfast/dynamic-contact-info-blocks
+ * Plugin URI:        https://www.rotsenacob.com/
  * Description:       Effortlessly manage your business details! Update phone numbers, emails, and addresses in a snap with dynamic fields. Stay organized and keep your information up to date.
- * Version:           1.0
+ * Version:           1.0.1
  * Author:            Rotsen Mark Acob
  * Author URI:        https://www.rotsenacob.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       ra-dynamic-contact-info-blocks
  * Domain Path:       /languages
- * Requires at least: 5.9.0
+ * Requires at least: 5.9
  * Requires PHP:      8.1
  */
 
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'DCIB_VERSION', '1.0' );
+define( 'DCIB_VERSION', '1.0.1' );
 
 /**
  * Plugin path.

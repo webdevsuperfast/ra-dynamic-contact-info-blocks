@@ -16,14 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class DCIB_Admin {
 
 	/**
-	 * Bypass flag for import — prevents sanitize_custom_fields from
-	 * wiping data that's already in processed array format.
-	 *
-	 * @var bool
-	 */
-	public static $skip_custom_fields_sanitize = false;
-
-	/**
 	 * Plugin slug.
 	 *
 	 * @var string
@@ -49,8 +41,6 @@ class DCIB_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'check_version_and_migrate' ) );
-		add_filter( 'pre_update_option_dcib_custom_fields', array( $this, 'sanitize_custom_fields' ), 10, 2 );
 		add_action( 'updated_option', array( $this, 'clear_cache_on_option_update' ), 10, 3 );
 		add_action( 'admin_post_dcib_export', array( $this, 'handle_export' ) );
 		add_action( 'admin_init', array( $this, 'handle_import' ) );
@@ -239,8 +229,9 @@ class DCIB_Admin {
 			'dcib_settings_group',
 			'dcib_custom_fields',
 			array(
-				'type'    => 'array',
-				'default' => array(),
+				'type'              => 'array',
+				'sanitize_callback' => array( $this, 'sanitize_custom_fields' ),
+				'default'           => array(),
 			)
 		);
 
@@ -328,7 +319,7 @@ class DCIB_Admin {
 	 * @return string
 	 */
 	public function sanitize_country( $value ) {
-		$value   = strtoupper( sanitize_text_field( $value ) );
+		$value   = strtoupper( sanitize_text_field( $this->to_string( $value ) ) );
 		$codes   = array_keys( DCIB_Phone_Utils::get_countries() );
 		$default = 'US';
 
@@ -476,9 +467,9 @@ class DCIB_Admin {
 	 * @return string Serialized array with 'value' and 'tel' keys.
 	 */
 	public function sanitize_phone_number( $value ) {
-		$value   = sanitize_text_field( $value );
+		$value   = sanitize_text_field( $this->to_string( $value ) );
 		$country = DCIB_Phone_Utils::get_default_country();
-		$tel     = isset( $_POST['dcib_phone_number_tel'] ) ? sanitize_text_field( wp_unslash( $_POST['dcib_phone_number_tel'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$tel     = isset( $_POST['dcib_phone_number_tel'] ) && is_string( $_POST['dcib_phone_number_tel'] ) ? sanitize_text_field( wp_unslash( $_POST['dcib_phone_number_tel'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		if ( empty( $value ) ) {
 			return '';
@@ -506,103 +497,85 @@ class DCIB_Admin {
 	}
 
 	/**
-	 * Run migrations when plugin version changes.
+	 * Sanitize the custom fields option.
 	 *
-	 * @return void
-	 */
-	public function check_version_and_migrate() {
-		$stored_version = get_option( 'dcib_version', '0' );
-
-		if ( version_compare( $stored_version, DCIB_VERSION, '<' ) ) {
-			update_option( 'dcib_version', DCIB_VERSION );
-		}
-	}
-
-	/**
-	 * Sanitize custom fields: normalize keys to (KEY) format, validate, strip empty.
+	 * The settings form submits parallel `key`, `type`, `value` (and optional
+	 * `tel`) arrays, while options written programmatically (imports, code)
+	 * use the stored `(KEY) => array( 'type', 'value' )` map. Both shapes are
+	 * accepted and re-sanitized in place, so a save never discards existing
+	 * fields and sanitizing an already sanitized value is harmless.
 	 *
-	 * @param array $value    Raw option value with 'key' and 'value' sub-arrays.
-	 * @param array $old_value Previous option value (unused).
+	 * @param mixed $value Raw option value.
 	 *
 	 * @return array
 	 */
-	public function sanitize_custom_fields( $value, $old_value = array() ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-		if ( self::$skip_custom_fields_sanitize ) {
-			self::$skip_custom_fields_sanitize = false;
-			return $value;
-		}
-
-		if ( ! is_array( $value ) || ! isset( $value['key'] ) || ! isset( $value['type'] ) || ! isset( $value['value'] ) ) {
+	public function sanitize_custom_fields( $value ) {
+		if ( ! is_array( $value ) ) {
 			return array();
 		}
 
-		$keys       = array_map( 'sanitize_text_field', wp_unslash( $value['key'] ) );
-		$types      = array_map( 'sanitize_text_field', wp_unslash( $value['type'] ) );
-		$raw_values = wp_unslash( $value['value'] );
-		$tel_values = isset( $value['tel'] ) ? wp_unslash( $value['tel'] ) : array();
+		$is_form = isset( $value['key'] ) && is_array( $value['key'] );
+		$rows    = $is_form ? $this->custom_field_rows_from_form( $value ) : $this->custom_field_rows_from_store( $value );
 
 		$valid_types = array( 'phone', 'email', 'address', 'custom' );
-
 		$country     = DCIB_Phone_Utils::get_default_country();
 		$sanitized   = array();
 		$has_invalid = false;
-		$tel_index   = 0;
 
-		foreach ( $keys as $index => $key ) {
-			$raw_key        = isset( $keys[ $index ] ) ? $keys[ $index ] : '';
-			$raw_type       = isset( $types[ $index ] ) && in_array( $types[ $index ], $valid_types, true ) ? $types[ $index ] : 'custom';
-			$raw_val        = isset( $raw_values[ $index ] ) ? $raw_values[ $index ] : '';
-			$normalized_key = '(' . trim( $raw_key, "() \t\n\r\0\x0B" ) . ')';
-			$normalized_key = strtoupper( $normalized_key );
+		foreach ( $rows as $row ) {
+			$key = '(' . strtoupper( trim( $row['key'], "() \t\n\r\0\x0B" ) ) . ')';
 
-			if ( ! preg_match( '/^\([A-Z0-9_]+\)$/', $normalized_key ) ) {
+			if ( ! preg_match( '/^\([A-Z0-9_]+\)$/', $key ) ) {
 				continue;
 			}
 
-			if ( 'phone' === $raw_type ) {
-				if ( empty( $raw_val ) ) {
+			$type = in_array( $row['type'], $valid_types, true ) ? $row['type'] : 'custom';
+			$raw  = $row['value'];
+
+			if ( 'phone' === $type ) {
+				if ( '' === $raw ) {
 					continue;
 				}
-				$tel_value = isset( $tel_values[ $tel_index ] ) ? sanitize_text_field( $tel_values[ $tel_index ] ) : '';
-				++$tel_index;
-				if ( '' === $tel_value ) {
-					$tel_value = DCIB_Phone_Utils::format_e164( $raw_val, $country );
-				} else {
-					$tel_value = DCIB_Phone_Utils::format_e164( $tel_value, $country );
-				}
-				if ( ! DCIB_Phone_Utils::is_valid( $raw_val, $country ) || ( $tel_value && ! DCIB_Phone_Utils::is_valid( $tel_value, $country ) ) ) {
+
+				$tel = DCIB_Phone_Utils::format_e164( '' !== $row['tel'] ? $row['tel'] : $raw, $country );
+
+				// The form rejects numbers that cannot be validated for the
+				// selected country. Stored values are kept as-is so imports
+				// and programmatic writes never lose saved data.
+				if ( $is_form && ( ! DCIB_Phone_Utils::is_valid( $raw, $country ) || ! DCIB_Phone_Utils::is_valid( $tel, $country ) ) ) {
 					$has_invalid = true;
 					continue;
 				}
-				$sanitized[ $normalized_key ] = array(
+
+				$sanitized[ $key ] = array(
 					'type'  => 'phone',
-					'value' => sanitize_text_field( $raw_val ),
-					'tel'   => $tel_value,
+					'value' => sanitize_text_field( $raw ),
+					'tel'   => $tel,
 				);
+
 				continue;
 			}
 
-			switch ( $raw_type ) {
+			switch ( $type ) {
 				case 'email':
-					$clean_val = sanitize_email( $raw_val );
+					$clean = sanitize_email( $raw );
 					break;
 				case 'address':
-					$clean_val = sanitize_textarea_field( $raw_val );
+					$clean = sanitize_textarea_field( $raw );
 					break;
-				case 'custom':
 				default:
-					$clean_val = sanitize_text_field( $raw_val );
+					$clean = sanitize_text_field( $raw );
 					break;
 			}
 
 			if ( class_exists( 'DCIB_Public' ) ) {
-				$public_inst = new DCIB_Public( 'dcib', defined( 'DCIB_VERSION' ) ? DCIB_VERSION : '1.0' );
-				$clean_val   = $public_inst->filter_normalize_value( $clean_val );
+				$public = new DCIB_Public( 'dcib', defined( 'DCIB_VERSION' ) ? DCIB_VERSION : '1.0' );
+				$clean  = $public->filter_normalize_value( $clean );
 			}
 
-			$sanitized[ $normalized_key ] = array(
-				'type'  => $raw_type,
-				'value' => $clean_val,
+			$sanitized[ $key ] = array(
+				'type'  => $type,
+				'value' => $clean,
 			);
 		}
 
@@ -619,6 +592,82 @@ class DCIB_Admin {
 		}
 
 		return $sanitized;
+	}
+
+	/**
+	 * Turn the parallel arrays submitted by the settings form into rows.
+	 *
+	 * @param array $value Raw option value.
+	 *
+	 * @return array[]
+	 */
+	private function custom_field_rows_from_form( array $value ) {
+		$types  = isset( $value['type'] ) && is_array( $value['type'] ) ? $value['type'] : array();
+		$values = isset( $value['value'] ) && is_array( $value['value'] ) ? $value['value'] : array();
+		$tels   = isset( $value['tel'] ) && is_array( $value['tel'] ) ? $value['tel'] : array();
+
+		$rows      = array();
+		$tel_index = 0;
+
+		foreach ( $value['key'] as $index => $key ) {
+			$type = isset( $types[ $index ] ) ? $this->to_string( $types[ $index ] ) : '';
+			$tel  = '';
+
+			if ( 'phone' === $type ) {
+				$tel = isset( $tels[ $tel_index ] ) ? $this->to_string( $tels[ $tel_index ] ) : '';
+				++$tel_index;
+			}
+
+			$rows[] = array(
+				'key'   => $this->to_string( $key ),
+				'type'  => $type,
+				'value' => $this->to_string( isset( $values[ $index ] ) ? $values[ $index ] : '' ),
+				'tel'   => $tel,
+			);
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Turn a stored `(KEY) => array( 'type', 'value' )` map into rows.
+	 *
+	 * Plain string entries from older versions are read as custom fields.
+	 *
+	 * @param array $value Stored option value.
+	 *
+	 * @return array[]
+	 */
+	private function custom_field_rows_from_store( array $value ) {
+		$rows = array();
+
+		foreach ( $value as $key => $entry ) {
+			$stored = is_array( $entry ) ? $entry : array();
+
+			$rows[] = array(
+				'key'   => $this->to_string( $key ),
+				'type'  => isset( $stored['type'] ) ? $this->to_string( $stored['type'] ) : '',
+				'value' => $this->to_string( isset( $stored['value'] ) ? $stored['value'] : ( is_array( $entry ) ? '' : $entry ) ),
+				'tel'   => isset( $stored['tel'] ) ? $this->to_string( $stored['tel'] ) : '',
+			);
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Coerce a submitted value to a string without raising on arrays.
+	 *
+	 * @param mixed $value Raw value.
+	 *
+	 * @return string
+	 */
+	private function to_string( $value ) {
+		if ( is_string( $value ) ) {
+			return $value;
+		}
+
+		return is_scalar( $value ) ? (string) $value : '';
 	}
 
 	/**

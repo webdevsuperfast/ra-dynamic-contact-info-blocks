@@ -2,9 +2,9 @@
 
 Contributors: frodobean
 Tags: contact, shortcode, phone, email, address
-Requires at least: 5.9.0
+Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,10 +100,18 @@ You can also output any field via the shortcode:
 
 == Requirements ==
 
-- WordPress 5.9.0 or higher
+- WordPress 5.9 or higher
 - PHP 8.1 or higher
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Fixed "Requires at least" to use the major WordPress version and match the plugin header.
+* Replaced the invalid Plugin URI with the author site.
+* Registered a sanitize callback for the custom fields setting instead of a `pre_update_option` filter.
+* Removed the recurring version migration that could overwrite saved phone numbers and custom fields.
+* Custom field sanitizing now accepts the stored data format, so imports and programmatic updates no longer erase existing fields.
 
 = 1.0 =
 

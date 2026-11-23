@@ -222,18 +222,9 @@ class DCIB_Import_Export {
 			update_option( 'dcib_maps_url', esc_url_raw( self::to_string( $data['maps_url'] ) ) );
 		}
 
-		// Bypass pre_update_option filter — import data already sanitized.
-		// The filter expects form-format arrays; import passes processed format.
-		if ( class_exists( 'DCIB_Admin' ) ) {
-			DCIB_Admin::$skip_custom_fields_sanitize = true;
-		}
+		// The setting's own sanitize callback re-validates the stored shape, so
+		// imports keep their fields instead of being discarded as form input.
 		update_option( 'dcib_custom_fields', $custom_fields );
-
-		// Reset the bypass so later writes in this request stay sanitized when
-		// update_option() short-circuits and the filter never runs.
-		if ( class_exists( 'DCIB_Admin' ) ) {
-			DCIB_Admin::$skip_custom_fields_sanitize = false;
-		}
 
 		// Clear the public cache.
 		if ( class_exists( 'DCIB_Public' ) ) {
