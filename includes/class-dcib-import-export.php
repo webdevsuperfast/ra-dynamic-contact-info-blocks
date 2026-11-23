@@ -46,11 +46,11 @@ class DCIB_Import_Export {
 	 */
 	public function export_data() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'dynamic-contact-info-blocks' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'ra-dynamic-contact-info-blocks' ) );
 		}
 
 		if ( ! isset( $_REQUEST['dcib_export_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['dcib_export_nonce'] ) ), 'dcib_export_settings' ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'dynamic-contact-info-blocks' ) );
+			wp_die( esc_html__( 'Security check failed.', 'ra-dynamic-contact-info-blocks' ) );
 		}
 
 		$data = array(
@@ -82,11 +82,11 @@ class DCIB_Import_Export {
 	 */
 	public function import_data() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'dynamic-contact-info-blocks' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'ra-dynamic-contact-info-blocks' ) );
 		}
 
 		if ( ! isset( $_POST['dcib_import_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dcib_import_nonce'] ) ), 'dcib_import_settings' ) ) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_nonce_error', __( 'Security check failed.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_nonce_error', __( 'Security check failed.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
@@ -95,7 +95,7 @@ class DCIB_Import_Export {
 			|| ! isset( $_FILES['dcib_import_file']['error'] )
 			|| UPLOAD_ERR_OK !== (int) $_FILES['dcib_import_file']['error']
 		) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_file_error', __( 'Please select a valid backup file.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_file_error', __( 'Please select a valid backup file.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
@@ -107,17 +107,17 @@ class DCIB_Import_Export {
 		$file_extension = strtolower( pathinfo( $file_name, PATHINFO_EXTENSION ) );
 
 		if ( 'json' !== $file_extension ) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_file_type_error', __( 'Invalid file type. Please upload a JSON file.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_file_type_error', __( 'Invalid file type. Please upload a JSON file.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
 		if ( ! isset( $file['size'] ) || (int) $file['size'] > 2 * MB_IN_BYTES ) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_file_size_error', __( 'Backup file is too large. Maximum size is 2 MB.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_file_size_error', __( 'Backup file is too large. Maximum size is 2 MB.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
 		if ( empty( $file['tmp_name'] ) || ! is_string( $file['tmp_name'] ) || ! is_uploaded_file( $file['tmp_name'] ) ) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_file_error', __( 'Please select a valid backup file.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_file_error', __( 'Please select a valid backup file.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
@@ -125,7 +125,7 @@ class DCIB_Import_Export {
 		$data    = json_decode( $content, true );
 
 		if ( JSON_ERROR_NONE !== json_last_error() || ! is_array( $data ) ) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_json_error', __( 'Invalid JSON file.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_json_error', __( 'Invalid JSON file.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
@@ -147,7 +147,7 @@ class DCIB_Import_Export {
 	private function apply_import( $data ) {
 		// Validate data structure.
 		if ( ! isset( $data['phone_number'] ) || ! isset( $data['email_address'] ) || ! isset( $data['address'] ) || ! isset( $data['custom_fields'] ) ) {
-			add_settings_error( 'dcib_import_messages', 'dcib_import_data_error', __( 'Invalid backup file structure.', 'dynamic-contact-info-blocks' ), 'error' );
+			add_settings_error( 'dcib_import_messages', 'dcib_import_data_error', __( 'Invalid backup file structure.', 'ra-dynamic-contact-info-blocks' ), 'error' );
 			return;
 		}
 
@@ -240,7 +240,7 @@ class DCIB_Import_Export {
 			DCIB_Public::clear_cache();
 		}
 
-		add_settings_error( 'dcib_import_messages', 'dcib_import_success', __( 'Settings imported successfully.', 'dynamic-contact-info-blocks' ), 'updated' );
+		add_settings_error( 'dcib_import_messages', 'dcib_import_success', __( 'Settings imported successfully.', 'ra-dynamic-contact-info-blocks' ), 'updated' );
 	}
 
 	/**
@@ -307,42 +307,42 @@ class DCIB_Import_Export {
 	 */
 	public function display_import_export_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'dynamic-contact-info-blocks' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'ra-dynamic-contact-info-blocks' ) );
 		}
 
 		?>
 		<div class="wrap">
-			<h1><?php echo esc_html__( 'Import/Export', 'dynamic-contact-info-blocks' ); ?></h1>
+			<h1><?php echo esc_html__( 'Import/Export', 'ra-dynamic-contact-info-blocks' ); ?></h1>
 			<?php settings_errors( 'dcib_import_messages' ); ?>
 
 			<div class="dcib-import-export-section">
-				<h2><?php echo esc_html__( 'Export Settings', 'dynamic-contact-info-blocks' ); ?></h2>
-				<p><?php echo esc_html__( 'Download a backup of your contact information settings.', 'dynamic-contact-info-blocks' ); ?></p>
+				<h2><?php echo esc_html__( 'Export Settings', 'ra-dynamic-contact-info-blocks' ); ?></h2>
+				<p><?php echo esc_html__( 'Download a backup of your contact information settings.', 'ra-dynamic-contact-info-blocks' ); ?></p>
 				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 					<?php wp_nonce_field( 'dcib_export_settings', 'dcib_export_nonce' ); ?>
 					<input type="hidden" name="action" value="dcib_export">
 					<p>
-						<button type="submit" class="button button-primary"><?php echo esc_html__( 'Download Backup', 'dynamic-contact-info-blocks' ); ?></button>
+						<button type="submit" class="button button-primary"><?php echo esc_html__( 'Download Backup', 'ra-dynamic-contact-info-blocks' ); ?></button>
 					</p>
 				</form>
 			</div>
 
 			<div class="dcib-import-export-section">
-				<h2><?php echo esc_html__( 'Import Settings', 'dynamic-contact-info-blocks' ); ?></h2>
-				<p><?php echo esc_html__( 'Upload a backup file to restore your contact information settings.', 'dynamic-contact-info-blocks' ); ?></p>
+				<h2><?php echo esc_html__( 'Import Settings', 'ra-dynamic-contact-info-blocks' ); ?></h2>
+				<p><?php echo esc_html__( 'Upload a backup file to restore your contact information settings.', 'ra-dynamic-contact-info-blocks' ); ?></p>
 				<form method="post" action="" enctype="multipart/form-data">
 					<?php wp_nonce_field( 'dcib_import_settings', 'dcib_import_nonce' ); ?>
 					<table class="form-table">
 						<tr>
-							<th scope="row"><?php echo esc_html__( 'Backup File', 'dynamic-contact-info-blocks' ); ?></th>
+							<th scope="row"><?php echo esc_html__( 'Backup File', 'ra-dynamic-contact-info-blocks' ); ?></th>
 							<td>
 								<input type="file" name="dcib_import_file" accept=".json" required>
-								<p class="description"><?php echo esc_html__( 'Select the JSON backup file to import.', 'dynamic-contact-info-blocks' ); ?></p>
+								<p class="description"><?php echo esc_html__( 'Select the JSON backup file to import.', 'ra-dynamic-contact-info-blocks' ); ?></p>
 							</td>
 						</tr>
 					</table>
 					<p>
-						<button type="submit" class="button button-primary"><?php echo esc_html__( 'Import Settings', 'dynamic-contact-info-blocks' ); ?></button>
+						<button type="submit" class="button button-primary"><?php echo esc_html__( 'Import Settings', 'ra-dynamic-contact-info-blocks' ); ?></button>
 					</p>
 				</form>
 			</div>

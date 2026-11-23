@@ -94,7 +94,7 @@ You can also output any field via the shortcode:
 
 == Installation ==
 
-1. Upload the `dynamic-contact-info-blocks` folder to the `/wp-content/plugins/` directory
+1. Upload the `ra-dynamic-contact-info-blocks` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure your contact information under the 'Contact Info' menu in the WordPress admin panel
 

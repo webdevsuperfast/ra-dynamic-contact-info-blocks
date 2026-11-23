@@ -40,7 +40,7 @@ class DCIB {
 	 */
 	public function __construct() {
 		$this->version     = DCIB_VERSION;
-		$this->plugin_name = 'dynamic-contact-info-blocks';
+		$this->plugin_name = 'ra-dynamic-contact-info-blocks';
 		$this->load_dependencies();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
@@ -80,7 +80,7 @@ class DCIB {
 		$plugin_admin = new DCIB_Admin( $this->get_plugin_name(), $this->get_version() );
 		add_action( 'admin_menu', array( $plugin_admin, 'add_plugin_admin_menu' ) );
 		add_filter(
-			'plugin_action_links_' . plugin_basename( plugin_dir_path( __DIR__ ) . 'dynamic-contact-info-blocks.php' ),
+			'plugin_action_links_' . plugin_basename( plugin_dir_path( __DIR__ ) . 'ra-dynamic-contact-info-blocks.php' ),
 			array( $plugin_admin, 'add_action_links' )
 		);
 	}
@@ -202,7 +202,7 @@ class DCIB {
 		$dynamic_tags_manager->register_group(
 			'dcib',
 			array(
-				'title' => esc_html__( 'Dynamic Contact Info', 'dynamic-contact-info-blocks' ),
+				'title' => esc_html__( 'Dynamic Contact Info', 'ra-dynamic-contact-info-blocks' ),
 			)
 		);
 

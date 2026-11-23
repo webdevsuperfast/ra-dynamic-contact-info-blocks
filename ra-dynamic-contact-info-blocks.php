@@ -2,7 +2,7 @@
 /**
  * The plugin bootstrap file
  *
- * @link              https://github.com/webdevsuperfast/dynamic-contact-info-blocks
+ * @link              https://github.com/webdevsuperfast/ra-dynamic-contact-info-blocks
  * @since             1.0
  * @package           DynamicContactInfoBlocks
  *
@@ -15,7 +15,7 @@
  * Author URI:        https://www.rotsenacob.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       dynamic-contact-info-blocks
+ * Text Domain:       ra-dynamic-contact-info-blocks
  * Domain Path:       /languages
  * Requires at least: 5.9.0
  * Requires PHP:      8.1

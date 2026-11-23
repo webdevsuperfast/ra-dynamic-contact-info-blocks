@@ -108,21 +108,21 @@ class DCIB_Admin {
 			$this->plugin_name,
 			'dcibAdmin',
 			array(
-				'copiedToClipboard' => __( 'Copied to clipboard', 'dynamic-contact-info-blocks' ),
-				'confirmRemove'     => __( 'Are you sure you want to remove this field?', 'dynamic-contact-info-blocks' ),
-				'copyKey'           => __( 'Copy Key', 'dynamic-contact-info-blocks' ),
-				'actions'           => __( 'Actions ▾', 'dynamic-contact-info-blocks' ),
-				'remove'            => __( 'Remove', 'dynamic-contact-info-blocks' ),
-				'typePhone'         => __( 'Phone', 'dynamic-contact-info-blocks' ),
-				'typeEmail'         => __( 'Email', 'dynamic-contact-info-blocks' ),
-				'typeAddress'       => __( 'Address', 'dynamic-contact-info-blocks' ),
-				'typeCustom'        => __( 'Custom', 'dynamic-contact-info-blocks' ),
-				'fieldKeyLabel'     => __( 'Field key, e.g. (STORE_HOURS)', 'dynamic-contact-info-blocks' ),
-				'fieldTypeLabel'    => __( 'Field type', 'dynamic-contact-info-blocks' ),
-				'fieldValueLabel'   => __( 'Field value', 'dynamic-contact-info-blocks' ),
+				'copiedToClipboard' => __( 'Copied to clipboard', 'ra-dynamic-contact-info-blocks' ),
+				'confirmRemove'     => __( 'Are you sure you want to remove this field?', 'ra-dynamic-contact-info-blocks' ),
+				'copyKey'           => __( 'Copy Key', 'ra-dynamic-contact-info-blocks' ),
+				'actions'           => __( 'Actions ▾', 'ra-dynamic-contact-info-blocks' ),
+				'remove'            => __( 'Remove', 'ra-dynamic-contact-info-blocks' ),
+				'typePhone'         => __( 'Phone', 'ra-dynamic-contact-info-blocks' ),
+				'typeEmail'         => __( 'Email', 'ra-dynamic-contact-info-blocks' ),
+				'typeAddress'       => __( 'Address', 'ra-dynamic-contact-info-blocks' ),
+				'typeCustom'        => __( 'Custom', 'ra-dynamic-contact-info-blocks' ),
+				'fieldKeyLabel'     => __( 'Field key, e.g. (STORE_HOURS)', 'ra-dynamic-contact-info-blocks' ),
+				'fieldTypeLabel'    => __( 'Field type', 'ra-dynamic-contact-info-blocks' ),
+				'fieldValueLabel'   => __( 'Field value', 'ra-dynamic-contact-info-blocks' ),
 				'defaultCountry'    => get_option( 'dcib_default_country', 'US' ),
-				'invalidNumber'     => __( 'Invalid phone number for selected country.', 'dynamic-contact-info-blocks' ),
-				'validNumber'       => __( 'Valid number', 'dynamic-contact-info-blocks' ),
+				'invalidNumber'     => __( 'Invalid phone number for selected country.', 'ra-dynamic-contact-info-blocks' ),
+				'validNumber'       => __( 'Valid number', 'ra-dynamic-contact-info-blocks' ),
 			)
 		);
 	}
@@ -134,8 +134,8 @@ class DCIB_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 		add_menu_page(
-			__( 'Dynamic Contact Info Blocks', 'dynamic-contact-info-blocks' ),
-			__( 'Contact Info', 'dynamic-contact-info-blocks' ),
+			__( 'Dynamic Contact Info Blocks', 'ra-dynamic-contact-info-blocks' ),
+			__( 'Contact Info', 'ra-dynamic-contact-info-blocks' ),
 			'manage_options',
 			'dcib-settings',
 			array( $this, 'display_plugin_admin_page' ),
@@ -145,8 +145,8 @@ class DCIB_Admin {
 
 		add_submenu_page(
 			'dcib-settings',
-			__( 'Import/Export', 'dynamic-contact-info-blocks' ),
-			__( 'Import/Export', 'dynamic-contact-info-blocks' ),
+			__( 'Import/Export', 'ra-dynamic-contact-info-blocks' ),
+			__( 'Import/Export', 'ra-dynamic-contact-info-blocks' ),
 			'manage_options',
 			'dcib-import-export',
 			array( $this, 'display_import_export_page' )
@@ -162,7 +162,7 @@ class DCIB_Admin {
 	 */
 	public function add_action_links( $links ) {
 		$settings_link = array(
-			'<a href="' . esc_url( admin_url( 'admin.php?page=dcib-settings' ) ) . '">' . esc_html__( 'Settings', 'dynamic-contact-info-blocks' ) . '</a>',
+			'<a href="' . esc_url( admin_url( 'admin.php?page=dcib-settings' ) ) . '">' . esc_html__( 'Settings', 'ra-dynamic-contact-info-blocks' ) . '</a>',
 		);
 		return array_merge( $settings_link, $links );
 	}
@@ -256,14 +256,14 @@ class DCIB_Admin {
 
 		add_settings_section(
 			'dcib_main_section',
-			__( 'Contact Information', 'dynamic-contact-info-blocks' ),
+			__( 'Contact Information', 'ra-dynamic-contact-info-blocks' ),
 			'__return_empty_string',
 			'dcib-settings'
 		);
 
 		add_settings_field(
 			'dcib_default_country',
-			__( 'Default Country', 'dynamic-contact-info-blocks' ),
+			__( 'Default Country', 'ra-dynamic-contact-info-blocks' ),
 			array( $this, 'render_country_field' ),
 			'dcib-settings',
 			'dcib_main_section'
@@ -271,7 +271,7 @@ class DCIB_Admin {
 
 		add_settings_field(
 			'dcib_phone_number',
-			__( 'Phone', 'dynamic-contact-info-blocks' ),
+			__( 'Phone', 'ra-dynamic-contact-info-blocks' ),
 			array( $this, 'render_phone_field' ),
 			'dcib-settings',
 			'dcib_main_section'
@@ -279,7 +279,7 @@ class DCIB_Admin {
 
 		add_settings_field(
 			'dcib_email_address',
-			__( 'Email', 'dynamic-contact-info-blocks' ),
+			__( 'Email', 'ra-dynamic-contact-info-blocks' ),
 			array( $this, 'render_email_field' ),
 			'dcib-settings',
 			'dcib_main_section'
@@ -287,7 +287,7 @@ class DCIB_Admin {
 
 		add_settings_field(
 			'dcib_address',
-			__( 'Address', 'dynamic-contact-info-blocks' ),
+			__( 'Address', 'ra-dynamic-contact-info-blocks' ),
 			array( $this, 'render_address_field' ),
 			'dcib-settings',
 			'dcib_main_section'
@@ -295,7 +295,7 @@ class DCIB_Admin {
 
 		add_settings_field(
 			'dcib_maps_url',
-			__( 'Maps URL (optional)', 'dynamic-contact-info-blocks' ),
+			__( 'Maps URL (optional)', 'ra-dynamic-contact-info-blocks' ),
 			array( $this, 'render_maps_url_field' ),
 			'dcib-settings',
 			'dcib_main_section'
@@ -316,7 +316,7 @@ class DCIB_Admin {
 				<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $country, $code ); ?>><?php echo esc_html( $name ); ?></option>
 			<?php endforeach; ?>
 		</select>
-		<p class="description"><?php esc_html_e( 'Used to format phone numbers for this site.', 'dynamic-contact-info-blocks' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Used to format phone numbers for this site.', 'ra-dynamic-contact-info-blocks' ); ?></p>
 		<?php
 	}
 
@@ -339,7 +339,7 @@ class DCIB_Admin {
 		add_settings_error(
 			'dcib_messages',
 			'dcib_country_error',
-			__( 'Invalid country selected.', 'dynamic-contact-info-blocks' )
+			__( 'Invalid country selected.', 'ra-dynamic-contact-info-blocks' )
 		);
 
 		return $default;
@@ -371,7 +371,7 @@ class DCIB_Admin {
 		<div class="dcib-field-group">
 			<input type="tel" id="dcib_phone_number" class="regular-text" name="dcib_phone_number" value="<?php echo esc_attr( $value ); ?>" required />
 			<div class="dcib-dropdown">
-				<button type="button" class="button dcib-dropdown-toggle" aria-haspopup="true" aria-expanded="false"><?php esc_html_e( 'Placeholders ▾', 'dynamic-contact-info-blocks' ); ?></button>
+				<button type="button" class="button dcib-dropdown-toggle" aria-haspopup="true" aria-expanded="false"><?php esc_html_e( 'Placeholders ▾', 'ra-dynamic-contact-info-blocks' ); ?></button>
 				<div class="dcib-dropdown-menu" role="menu">
 					<div class="dcib-dropdown-item" role="menuitem" tabindex="-1" data-copy="(PHONE)">(PHONE)</div>
 					<div class="dcib-dropdown-item" role="menuitem" tabindex="-1" data-copy="(PHONE_LINK)">(PHONE_LINK)</div>
@@ -379,7 +379,7 @@ class DCIB_Admin {
 			</div>
 		</div>
 		<p class="description">
-			<?php esc_html_e( 'Use (PHONE) for display, (PHONE_LINK) for a tel: link.', 'dynamic-contact-info-blocks' ); ?>
+			<?php esc_html_e( 'Use (PHONE) for display, (PHONE_LINK) for a tel: link.', 'ra-dynamic-contact-info-blocks' ); ?>
 		</p>
 		<?php
 	}
@@ -395,14 +395,14 @@ class DCIB_Admin {
 		<div class="dcib-field-group">
 			<input type="email" id="dcib_email_address" class="regular-text" name="dcib_email_address" value="<?php echo esc_attr( $value ); ?>" required />
 			<div class="dcib-dropdown">
-				<button type="button" class="button dcib-dropdown-toggle" aria-haspopup="true" aria-expanded="false"><?php esc_html_e( 'Placeholders ▾', 'dynamic-contact-info-blocks' ); ?></button>
+				<button type="button" class="button dcib-dropdown-toggle" aria-haspopup="true" aria-expanded="false"><?php esc_html_e( 'Placeholders ▾', 'ra-dynamic-contact-info-blocks' ); ?></button>
 				<div class="dcib-dropdown-menu" role="menu">
 					<div class="dcib-dropdown-item" role="menuitem" tabindex="-1" data-copy="(EMAIL)">(EMAIL)</div>
 					<div class="dcib-dropdown-item" role="menuitem" tabindex="-1" data-copy="(EMAIL_LINK)">(EMAIL_LINK)</div>
 				</div>
 			</div>
 		</div>
-		<p class="description"><?php esc_html_e( 'Use (EMAIL) anywhere to output this value.', 'dynamic-contact-info-blocks' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use (EMAIL) anywhere to output this value.', 'ra-dynamic-contact-info-blocks' ); ?></p>
 		<?php
 	}
 
@@ -417,14 +417,14 @@ class DCIB_Admin {
 		<div class="dcib-field-group">
 			<textarea id="dcib_address" class="regular-text" name="dcib_address" rows="3" required><?php echo esc_textarea( $value ); ?></textarea>
 			<div class="dcib-dropdown">
-				<button type="button" class="button dcib-dropdown-toggle" aria-haspopup="true" aria-expanded="false"><?php esc_html_e( 'Placeholders ▾', 'dynamic-contact-info-blocks' ); ?></button>
+				<button type="button" class="button dcib-dropdown-toggle" aria-haspopup="true" aria-expanded="false"><?php esc_html_e( 'Placeholders ▾', 'ra-dynamic-contact-info-blocks' ); ?></button>
 				<div class="dcib-dropdown-menu" role="menu">
 					<div class="dcib-dropdown-item" role="menuitem" tabindex="-1" data-copy="(ADDRESS)">(ADDRESS)</div>
 					<div class="dcib-dropdown-item" role="menuitem" tabindex="-1" data-copy="(ADDRESS_LINK)">(ADDRESS_LINK)</div>
 				</div>
 			</div>
 		</div>
-		<p class="description"><?php esc_html_e( 'Use (ADDRESS) for text, (ADDRESS_LINK) for a map URL.', 'dynamic-contact-info-blocks' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Use (ADDRESS) for text, (ADDRESS_LINK) for a map URL.', 'ra-dynamic-contact-info-blocks' ); ?></p>
 		<?php
 	}
 
@@ -437,7 +437,7 @@ class DCIB_Admin {
 		$value = get_option( 'dcib_maps_url', '' );
 		?>
 		<input type="url" id="dcib_maps_url" class="regular-text" name="dcib_maps_url" value="<?php echo esc_url( $value ); ?>" placeholder="https://www.google.com/maps/..." />
-		<p class="description"><?php esc_html_e( 'Leave empty to auto-generate a Google Maps link from the address above, or paste a custom URL (Google Business Profile, Apple Maps, etc.).', 'dynamic-contact-info-blocks' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Leave empty to auto-generate a Google Maps link from the address above, or paste a custom URL (Google Business Profile, Apple Maps, etc.).', 'ra-dynamic-contact-info-blocks' ); ?></p>
 		<?php
 	}
 
@@ -490,7 +490,7 @@ class DCIB_Admin {
 				'dcib_phone_invalid',
 				sprintf(
 					/* translators: %s: country name */
-					__( 'Phone number does not appear to be valid for %s.', 'dynamic-contact-info-blocks' ),
+					__( 'Phone number does not appear to be valid for %s.', 'ra-dynamic-contact-info-blocks' ),
 					DCIB_Phone_Utils::get_countries()[ $country ]
 				)
 			);
@@ -709,7 +709,7 @@ class DCIB_Admin {
 				'dcib_phone_invalid',
 				sprintf(
 				/* translators: %s: country name */
-					__( 'One or more phone numbers are not valid for %s and were not saved.', 'dynamic-contact-info-blocks' ),
+					__( 'One or more phone numbers are not valid for %s and were not saved.', 'ra-dynamic-contact-info-blocks' ),
 					DCIB_Phone_Utils::get_countries()[ $country ]
 				)
 			);

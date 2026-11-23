@@ -1,5 +1,5 @@
 {
-  "name": "dynamic-contact-info-blocks",
+  "name": "ra-dynamic-contact-info-blocks",
   "version": "1.0.0",
   "description": "Effortlessly manage your business details! Update phone numbers, emails, and addresses in a snap with dynamic fields.",
   "keywords": [
@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/webdevsuperfast/dynamic-contact-info-blocks.git"
+    "url": "https://github.com/webdevsuperfast/ra-dynamic-contact-info-blocks.git"
   },
   "license": "GPL-2.0-or-later",
   "author": "Rotsen Mark Acob",

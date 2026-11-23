@@ -35,7 +35,7 @@ class DCIB_Elementor_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'DCIB Contact Info', 'dynamic-contact-info-blocks' );
+		return esc_html__( 'DCIB Contact Info', 'ra-dynamic-contact-info-blocks' );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class DCIB_Elementor_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
 		$this->add_control(
 			'dcib_field',
 			array(
-				'label'   => esc_html__( 'Field', 'dynamic-contact-info-blocks' ),
+				'label'   => esc_html__( 'Field', 'ra-dynamic-contact-info-blocks' ),
 				'type'    => 'select',
 				'options' => $this->get_field_options(),
 				'default' => 'PHONE',
@@ -109,9 +109,9 @@ class DCIB_Elementor_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
 	 */
 	private function get_field_options() {
 		$options = array(
-			'PHONE'   => esc_html__( 'Phone', 'dynamic-contact-info-blocks' ),
-			'EMAIL'   => esc_html__( 'Email', 'dynamic-contact-info-blocks' ),
-			'ADDRESS' => esc_html__( 'Address', 'dynamic-contact-info-blocks' ),
+			'PHONE'   => esc_html__( 'Phone', 'ra-dynamic-contact-info-blocks' ),
+			'EMAIL'   => esc_html__( 'Email', 'ra-dynamic-contact-info-blocks' ),
+			'ADDRESS' => esc_html__( 'Address', 'ra-dynamic-contact-info-blocks' ),
 		);
 
 		// Check for phone link variant.
@@ -123,14 +123,14 @@ class DCIB_Elementor_Dynamic_Tag extends \Elementor\Core\DynamicTags\Tag {
 			}
 		}
 		if ( is_array( $phone_raw ) && ! empty( $phone_raw['tel'] ) ) {
-			$options['PHONE_LINK'] = esc_html__( 'Phone (tel: link)', 'dynamic-contact-info-blocks' );
+			$options['PHONE_LINK'] = esc_html__( 'Phone (tel: link)', 'ra-dynamic-contact-info-blocks' );
 		}
 
 		// Email link always available.
-		$options['EMAIL_LINK'] = esc_html__( 'Email (mailto: link)', 'dynamic-contact-info-blocks' );
+		$options['EMAIL_LINK'] = esc_html__( 'Email (mailto: link)', 'ra-dynamic-contact-info-blocks' );
 
 		// Address link always available.
-		$options['ADDRESS_LINK'] = esc_html__( 'Address (map link)', 'dynamic-contact-info-blocks' );
+		$options['ADDRESS_LINK'] = esc_html__( 'Address (map link)', 'ra-dynamic-contact-info-blocks' );
 
 		// Add custom fields.
 		if ( function_exists( 'get_option' ) ) {
