@@ -4,7 +4,7 @@ Contributors: frodobean
 Tags: contact, shortcode, phone, email, address
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -104,6 +104,11 @@ You can also output any field via the shortcode:
 - PHP 8.1 or higher
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Fix false phone validation error on first save
+* Revert back plugin URI to public GitHub repository
 
 = 1.0.1 =
 

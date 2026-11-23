@@ -92,6 +92,20 @@ These tags will be replaced with the current DCIB field values when the email is
 
 ## Changelog
 
+### 1.0.2
+
+- Fix false phone validation error on first save
+- Revert back plugin URI to public GitHub repository
+
+### 1.0.1
+
+- Fixed "Requires at least" to use the major WordPress version and match the plugin header.
+- Replaced the invalid Plugin URI with the author site.
+- Registered a sanitize callback for the custom fields setting instead of a `pre_update_option` filter.
+- Removed the recurring version migration that could overwrite saved phone numbers and custom fields.
+- Custom field sanitizing now accepts the stored data format, so imports and programmatic updates no longer erase existing fields.
+- Fixed the false "Phone number does not appear to be valid" error on the first save, where the not-yet-stored option was sanitized twice.
+
 ### 1.0
 
 - Initial release
