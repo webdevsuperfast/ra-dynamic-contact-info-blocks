@@ -80,7 +80,7 @@ jobs:
         run: zip -r ra-dynamic-contact-info-blocks.zip . --exclude=.git/* --exclude=.github/* --exclude=.gitignore --exclude=.editorconfig --exclude=phpcs.xml --exclude=composer.lock --exclude=composer.json --exclude=composer.phar --exclude=*.md --exclude=*.json --exclude=.agents/* --exclude=vendor/* --exclude=build.js
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ra-dynamic-contact-info-blocks-zip
           path: ra-dynamic-contact-info-blocks.zip
