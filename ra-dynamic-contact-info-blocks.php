@@ -2,13 +2,13 @@
 /**
  * The plugin bootstrap file
  *
- * @link              https://www.rotsenacob.com/
+ * @link              https://github.com/webdevsuperfast/ra-dynamic-contact-info-blocks
  * @since             1.0
  * @package           DynamicContactInfoBlocks
  *
  * @wordpress-plugin
  * Plugin Name:       Dynamic Contact Info Blocks
- * Plugin URI:        https://www.rotsenacob.com/
+ * Plugin URI:        https://github.com/webdevsuperfast/ra-dynamic-contact-info-blocks
  * Description:       Effortlessly manage your business details! Update phone numbers, emails, and addresses in a snap with dynamic fields. Stay organized and keep your information up to date.
  * Version:           1.0.1
  * Author:            Rotsen Mark Acob
