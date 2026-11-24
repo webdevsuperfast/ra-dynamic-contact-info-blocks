@@ -77,7 +77,46 @@ jobs:
           echo "Version check passed: ${PLUGIN_VERSION}"
 
       - name: Create Archive
-        run: zip -r ra-dynamic-contact-info-blocks.zip . --exclude=.git/* --exclude=.github/* --exclude=.gitignore --exclude=.editorconfig --exclude=phpcs.xml --exclude=composer.lock --exclude=composer.json --exclude=composer.phar --exclude=*.md --exclude=*.json --exclude=.agents/* --exclude=vendor/* --exclude=build.js
+        run: |
+          mkdir -p "dist/ra-dynamic-contact-info-blocks"
+          rsync -a \
+            --exclude=.git/ \
+            --exclude=.github/ \
+            --exclude=.gitignore \
+            --exclude=.editorconfig \
+            --exclude=phpcs.xml \
+            --exclude=composer.json \
+            --exclude=composer.lock \
+            --exclude=composer.phar \
+            --exclude='*.md' \
+            --exclude='*.json' \
+            --exclude=.agents/ \
+            --exclude=vendor/ \
+            --exclude=node_modules/ \
+            --exclude=dist/ \
+            --exclude=build.js \
+            ./ "dist/ra-dynamic-contact-info-blocks/"
+          ( cd dist && zip -r -X ../ra-dynamic-contact-info-blocks.zip ra-dynamic-contact-info-blocks )
+
+      - name: Verify Archive Layout
+        run: |
+          # WordPress uses the single top-level directory as the installed plugin
+          # folder. A flat archive makes WP fall back to the basename of its unpack
+          # working directory (WP_Upgrader::get_working_dir_name()), which appends
+          # a random 16 character suffix, e.g. ra-dynamic-contact-info-blocks-U6zY9I0dwhTR7UWr.
+          TOP_LEVEL=$(unzip -Z1 ra-dynamic-contact-info-blocks.zip | cut -d/ -f1 | sort -u)
+
+          if [ "${TOP_LEVEL}" != "ra-dynamic-contact-info-blocks" ]; then
+            echo "::error::Archive must contain exactly one top-level directory named ra-dynamic-contact-info-blocks (found: ${TOP_LEVEL})"
+            exit 1
+          fi
+
+          if ! unzip -Z1 ra-dynamic-contact-info-blocks.zip | grep -qx 'ra-dynamic-contact-info-blocks/ra-dynamic-contact-info-blocks.php'; then
+            echo "::error::Archive is missing ra-dynamic-contact-info-blocks/ra-dynamic-contact-info-blocks.php"
+            exit 1
+          fi
+
+          echo "Archive layout verified"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
