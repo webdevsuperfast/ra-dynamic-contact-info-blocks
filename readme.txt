@@ -4,7 +4,7 @@ Contributors: frodobean
 Tags: contact, shortcode, phone, email, address
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -104,6 +104,10 @@ You can also output any field via the shortcode:
 - PHP 8.1 or higher
 
 == Changelog ==
+
+= 1.0.3 =
+
+* Validate and normalize serialized phone `tel` values during settings sanitization.
 
 = 1.0.2 =
 

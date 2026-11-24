@@ -10,7 +10,7 @@
  * Plugin Name:       Dynamic Contact Info Blocks
  * Plugin URI:        https://github.com/webdevsuperfast/ra-dynamic-contact-info-blocks
  * Description:       Effortlessly manage your business details! Update phone numbers, emails, and addresses in a snap with dynamic fields. Stay organized and keep your information up to date.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            Rotsen Mark Acob
  * Author URI:        https://www.rotsenacob.com
  * License:           GPL-2.0+
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'DCIB_VERSION', '1.0.2' );
+define( 'DCIB_VERSION', '1.0.3' );
 
 /**
  * Plugin path.

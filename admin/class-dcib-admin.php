@@ -477,10 +477,15 @@ class DCIB_Admin {
 				return '';
 			}
 
+			$country = DCIB_Phone_Utils::get_default_country();
+			$tel     = ( '' !== $stored['tel'] && DCIB_Phone_Utils::is_valid( $stored['tel'], $country ) )
+				? DCIB_Phone_Utils::format_e164( $stored['tel'], $country )
+				: DCIB_Phone_Utils::format_e164( $stored['value'], $country );
+
 			return maybe_serialize(
 				array(
-					'value' => DCIB_Phone_Utils::format( $stored['value'], DCIB_Phone_Utils::get_default_country() ),
-					'tel'   => $stored['tel'],
+					'value' => DCIB_Phone_Utils::format( $stored['value'], $country ),
+					'tel'   => $tel,
 				)
 			);
 		}
