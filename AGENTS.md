@@ -42,7 +42,7 @@ npm run watch   # node build.js --watch (esbuild context watch)
 npm test                    # stub, always exits 1 — no tests exist
 ```
 
-CI (`deploy.yml`, triggers: PR→`main`, push→`main`, any tag): `lint` always runs; `build`/`release` run only on tags. Tag `vX.Y.Z` (stripped `v`) must equal both `DCIB_VERSION` and the `Version:` header or the job fails. Zip excludes `.git/*,.github/*,vendor/*,build.js,*.md,*.json,composer.*,phpcs.xml,.editorconfig,.agents/*`.
+CI (`deploy.yml`, triggers: PR→`main`, push→`main`, any tag): `lint` always runs; `build`/`release` run only on tags. Tag `vX.Y.Z` (stripped `v`) must equal both `DCIB_VERSION` and the `Version:` header or the job fails. The release zip must contain exactly one top-level directory, `ra-dynamic-contact-info-blocks/` (rsync stage into `dist/`), otherwise WordPress names the installed folder after its random unpack dir (`slug-<16 random chars>`, `WP_Upgrader::get_working_dir_name()`); a verify step enforces this and the main plugin file's presence. Zip excludes `.git/*,.github/*,.agents/*,vendor/*,node_modules/*,dist/*,.gitignore,.editorconfig,phpcs.xml,composer.*,build.js,*.md,*.json`.
 
 ## Code Conventions & Common Patterns
 
